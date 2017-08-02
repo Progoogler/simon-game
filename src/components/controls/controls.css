@@ -1,0 +1,36 @@
+.controls-container {
+  position: absolute;
+  top: 57%;
+}
+
+.start-button {
+  display: inline-block;
+  text-align: center;
+  margin-right: 8px;
+  line-height: 43px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #e04006;
+  box-shadow: 2px 1px 1px 1px black;
+}
+
+.start-button:hover {
+  cursor: pointer;
+}
+
+.strict-button {
+  display: inline-block;
+  text-align: center;
+  line-height: 43px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: 1px solid black;
+  background-color: white;
+  box-shadow: 2px 1px 1px 1px black;
+}
+
+.strict-button:hover {
+  cursor: pointer;
+}
