@@ -18,7 +18,7 @@ class Count extends Component {
     );
   }
 
-  componentWillReceiveProps(nextProps) { console.log(nextProps)
+  componentWillReceiveProps(nextProps) {
     if (nextProps.strict !== this.props.strict) {
       if (nextProps.strict === true) {
         this.setState({boxShadow: 'inset 0 0 10px #e04006'});

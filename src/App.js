@@ -66,6 +66,14 @@ class App extends Component {
     );
   }
 
+  componentWillMount() {
+    for (let i = 0; i < 2; i++) {
+      document.getElementsByClassName('main')[i].style.height = '100%';
+      document.getElementsByClassName('main')[i].style.width = '100%';
+      document.getElementsByClassName('main')[i].style.boxShadow = 'inset 0 0 100px black';
+    }
+  }
+
   pickNewColor(number) { // 0: red, 1: green, 2: blue, 3: yellow
     this.memory.push(number);
     this.updateCount(this.memory.length);
@@ -83,6 +91,7 @@ class App extends Component {
     setTimeout(() => {
       this.showingPattern = false;
     }, this.memory.length * 750);
+    clearTimeout(this.notify);
     this.notify = setTimeout(() => {
       this.notification();
     }, this.memory.length * 750 + 15000);
