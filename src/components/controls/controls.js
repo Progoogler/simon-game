@@ -18,7 +18,7 @@ class Controls extends Component {
         <div className={'start-button'} style={{boxShadow: this.state.startShadow}} onClick={this.props.startNewGame()}>
           <img src="./images/power-icon.png" alt="Power on/off symbol" />
         </div>
-        <div className={'strict-button'} style={{boxShadow: this.state.strictShadow}} onClick={this.props.enableStrictMode()}>
+        <div className={'strict-button'} style={{boxShadow: this.state.strictShadow}} onClick={this.props.toggleStrictMode()}>
           <img src="./images/flame-icon.png" alt="Flame to signify difficulty" />
         </div>
       </div>
