@@ -48,6 +48,7 @@ class App extends Component {
     this.yellowSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
     this.errorSound = new Audio('./sounds/Computer-Error-Alert.mp3');
     this.winSound = new Audio('./sounds/Crowd-Applause.mp3');
+    this.secretCelebration = 0;
   }
 
   render() {
@@ -242,7 +243,7 @@ class App extends Component {
     }
   }
 
-  handleRedCorner() { this.displayWinSignal();
+  handleRedCorner() {
     this.redSound.play();
     if (this.showingPattern || this.celebrating) return;
     clearTimeout(this.notify);
@@ -273,6 +274,12 @@ class App extends Component {
           }
         }
       }
+    }
+    if (this.state.count === '00' && this.secretCelebration === 3) {
+      this.displayWinSignal();
+      this.secretCelebration = 0;
+    } else {
+      this.secretCelebration++;
     }
   }
 
@@ -308,6 +315,12 @@ class App extends Component {
         }
       }
     }
+    if (this.state.count === '00' && this.secretCelebration === 3) {
+      this.displayWinSignal();
+      this.secretCelebration = 0;
+    } else {
+      this.secretCelebration++;
+    }
   }
 
   handleBlueCorner() {
@@ -342,6 +355,12 @@ class App extends Component {
         }
       }
     }
+    if (this.state.count === '00' && this.secretCelebration === 3) {
+      this.displayWinSignal();
+      this.secretCelebration = 0;
+    } else {
+      this.secretCelebration++;
+    }
   }
 
   handleYellowCorner() {
@@ -375,6 +394,12 @@ class App extends Component {
           }
         }
       }
+    }
+    if (this.state.count === '00' && this.secretCelebration === 3) {
+      this.displayWinSignal();
+      this.secretCelebration = 0;
+    } else {
+      this.secretCelebration++;
     }
   }
 
