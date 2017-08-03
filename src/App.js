@@ -56,12 +56,12 @@ class App extends Component {
         <Title />
         <Count strict={this.state.strict} count={this.state.count} />
         <div className={'Square'} style={{border: this.state.border, boxShadow: this.state.boxShadow}}>
-          <Corner color={this.state[0]} degree={.37} place={'top'} top={'-19px'} left={'-58px'} activateColor={() => this.handleRedCorner.bind(this)} />
+          <Corner color={this.state[0]} degree={.37} place={'top'} top={'-20px'} left={'-58px'} activateColor={() => this.handleRedCorner.bind(this)} />
           <Corner color={this.state[1]} degree={.875} place={'bottom'} top={'127px'} left={'167px'} activateColor={() => this.handleGreenCorner.bind(this)} />
-          <Corner color={this.state[2]} degree={.63} place={'left'} bottom={'167px'} left={'169px'} activateColor={() => this.handleBlueCorner.bind(this)} />
+          <Corner color={this.state[2]} degree={.626} place={'left'} bottom={'167.6px'} left={'169px'} activateColor={() => this.handleBlueCorner.bind(this)} />
           <Corner color={this.state[3]} degree={.125} place={'right'} bottom={'20px'} left={'-56px'} activateColor={() => this.handleYellowCorner.bind(this)} />
         </div>
-        <Controls start={this.state.startButton} strict={this.state.strictButton} startNewGame={() => this.startNewGame.bind(this)} enableStrictMode={() => this.enableStrictMode.bind(this)} />
+        <Controls start={this.state.startButton} strict={this.state.strictButton} startNewGame={() => this.startNewGame.bind(this)} toggleStrictMode={() => this.toggleStrictMode.bind(this)} />
       </div>
     );
   }
@@ -242,7 +242,7 @@ class App extends Component {
     }
   }
 
-  handleRedCorner() {
+  handleRedCorner() { this.displayWinSignal();
     this.redSound.play();
     if (this.showingPattern || this.celebrating) return;
     clearTimeout(this.notify);
@@ -387,14 +387,24 @@ class App extends Component {
   }
 
   startNewGame() {
+    if (this.state.count === '01') {
+      this.setState({count: '00'});
+      clearTimeout(this.notify);
+      return;
+    }
     this.memory = [];
     this.attempt = [];
     this.setState({startButton: this.state.startButton + 1});
     this.pickNewColor(Math.floor(Math.random() * 3));
   }
 
-  enableStrictMode() {
+  toggleStrictMode() {
     this.setState({strict: !this.state.strict, strictButton: this.state.strictButton + 1});
+    if (this.state.strict) {
+      document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 100px black';
+    } else {
+      document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 100px #e04006';
+    }
   }
 
   displaySuccessSignal() {
@@ -408,33 +418,107 @@ class App extends Component {
     this.winSound.play();
     this.celebrating = true;
     this.setState({boxShadow: this.redShadow});
-    setTimeout(() => this.setState({boxShadow: this.greenShadow}), 250);
-    setTimeout(() => this.setState({boxShadow: this.blueShadow}), 500);
-    setTimeout(() => this.setState({boxShadow: this.yellowShadow}), 750);
-    setTimeout(() => this.setState({boxShadow: this.redShadow}), 1000);
-    setTimeout(() => this.setState({boxShadow: this.greenShadow}), 1250);
-    setTimeout(() => this.setState({boxShadow: this.blueShadow}), 1500);
-    setTimeout(() => this.setState({boxShadow: this.yellowShadow}), 1750);
-    setTimeout(() => this.setState({boxShadow: this.redShadow}), 2000);
-    setTimeout(() => this.setState({boxShadow: this.greenShadow}), 2250);
-    setTimeout(() => this.setState({boxShadow: this.blueShadow}), 2500);
-    setTimeout(() => this.setState({boxShadow: this.yellowShadow}), 2750);
-    setTimeout(() => this.setState({boxShadow: this.redShadow}), 3000);
-    setTimeout(() => this.setState({boxShadow: this.greenShadow}), 3250);
-    setTimeout(() => this.setState({boxShadow: this.blueShadow}), 3500);
-    setTimeout(() => this.setState({boxShadow: this.yellowShadow}), 3750);
-    setTimeout(() => this.setState({boxShadow: this.redShadow}), 4000);
-    setTimeout(() => this.setState({boxShadow: this.greenShadow}), 4250);
-    setTimeout(() => this.setState({boxShadow: this.blueShadow}), 4500);
-    setTimeout(() => this.setState({boxShadow: this.yellowShadow}), 4750);
-    setTimeout(() => this.setState({boxShadow: this.redShadow}), 5000);
-    setTimeout(() => this.setState({boxShadow: this.greenShadow}), 5250);
-    setTimeout(() => this.setState({boxShadow: this.blueShadow}), 5500);
-    setTimeout(() => this.setState({boxShadow: this.yellowShadow}), 5750);
-    setTimeout(() => this.setState({boxShadow: '0px 0px 50px #e04006, inset 0 0 20px #e04006'}), 6000);
+    document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 100px #ff4d4d';
+    setTimeout(() => {
+       this.setState({boxShadow: this.greenShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 110px #00b300';
+     }, 250);
+    setTimeout(() => {
+       this.setState({boxShadow: this.blueShadow})
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 120px #3333ff';
+     }, 500);
+    setTimeout(() => {
+       this.setState({boxShadow: this.yellowShadow})
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 130px #ffff66';
+     }, 750);
+    setTimeout(() => {
+       this.setState({boxShadow: this.redShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 140px #ff4d4d';
+     }, 1000);
+    setTimeout(() => {
+       this.setState({boxShadow: this.greenShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 150px #00b300';
+     }, 1250);
+    setTimeout(() => {
+       this.setState({boxShadow: this.blueShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 160px #3333ff';
+     }, 1500);
+    setTimeout(() => {
+       this.setState({boxShadow: this.yellowShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 170px #ffff66';
+     }, 1750);
+    setTimeout(() => {
+       this.setState({boxShadow: this.redShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 180px #ff4d4d';
+     }, 2000);
+    setTimeout(() => {
+       this.setState({boxShadow: this.greenShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 190px #00b300';
+     }, 2250);
+    setTimeout(() => {
+       this.setState({boxShadow: this.blueShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 200px #3333ff';
+     }, 2500);
+    setTimeout(() => {
+       this.setState({boxShadow: this.yellowShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 210px #ffff66';
+     }, 2750);
+    setTimeout(() => {
+       this.setState({boxShadow: this.redShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 220px #ff4d4d';
+     }, 3000);
+    setTimeout(() => {
+       this.setState({boxShadow: this.greenShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 230px #00b300';
+     }, 3250);
+    setTimeout(() => {
+       this.setState({boxShadow: this.blueShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 240px #3333ff';
+     }, 3500);
+    setTimeout(() => {
+       this.setState({boxShadow: this.yellowShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 250px #ffff66';
+     }, 3750);
+    setTimeout(() => {
+       this.setState({boxShadow: this.redShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 260px #ff4d4d';
+     }, 4000);
+    setTimeout(() => {
+       this.setState({boxShadow: this.greenShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 270px #00b300';
+     }, 4250);
+    setTimeout(() => {
+       this.setState({boxShadow: this.blueShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 280px #3333ff';
+     }, 4500);
+    setTimeout(() => {
+       this.setState({boxShadow: this.yellowShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 290px #ffff66';
+     }, 4750);
+    setTimeout(() => {
+       this.setState({boxShadow: this.redShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 300px #ff4d4d';
+     }, 5000);
+    setTimeout(() => {
+       this.setState({boxShadow: this.greenShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 310px #00b300';
+     }, 5250);
+    setTimeout(() => {
+       this.setState({boxShadow: this.blueShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 320px #3333ff';
+     }, 5500);
+    setTimeout(() => {
+       this.setState({boxShadow: this.yellowShadow});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 330px #ffff66';
+     }, 5750);
+    setTimeout(() => {
+       this.setState({boxShadow: '0px 0px 50px #e04006, inset 0 0 20px #e04006'});
+       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 340px #e04006';
+     }, 6000);
     setTimeout(() => {
       this.celebrating = false;
       this.setState({boxShadow: this.normalShadow, count: '00'});
+      document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 100px black';
     }, 10000);
   }
 
