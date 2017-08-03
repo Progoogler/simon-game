@@ -5,7 +5,7 @@
 
 .Square {
   animation: square-spin infinite 20s linear;
-  height: 251px;
+  height: 252px;
   width: 252px;
   border: 10px solid grey;
   border-radius: 50px;
