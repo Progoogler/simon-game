@@ -8,7 +8,7 @@ class Controls extends Component {
         <div className={'start-button'} onClick={this.props.startNewGame()}>
           <img src="./images/power-icon.png" alt="Power on/off symbol" />
         </div>
-        <div className={'strict-button'}>
+        <div className={'strict-button'} onClick={this.props.enableStrictMode()}>
           <img src="./images/flame-icon.png" alt="Flame to signify difficulty" />
         </div>
       </div>
