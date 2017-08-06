@@ -12,7 +12,7 @@ class Count extends Component {
 
   render() {
     return (
-      <div className={'container'} style={{boxShadow: this.state.boxShadow}}>
+      <div className={'container'} style={{boxShadow: this.state.boxShadow}} onClick={this.props.handleClick()}>
         <div className={'count'}>{ this.props.count }</div>
       </div>
     );

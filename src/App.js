@@ -22,6 +22,7 @@ class App extends Component {
     };
     this.memory = [];
     this.attempt = [];
+    this.goal = 20;
     this.strict = false;
     this.showingPattern = false;
     this.celebrating = false;
@@ -55,13 +56,13 @@ class App extends Component {
     return (
       <div className={'App'}>
         <Title />
-        <Count strict={this.state.strict} count={this.state.count} />
         <div className={'Square'} style={{border: this.state.border, boxShadow: this.state.boxShadow}}>
           <Corner color={this.state[0]} degree={.37} place={'top'} top={'-20px'} left={'-58px'} activateColor={() => this.handleRedCorner.bind(this)} />
           <Corner color={this.state[1]} degree={.875} place={'bottom'} top={'127px'} left={'167px'} activateColor={() => this.handleGreenCorner.bind(this)} />
           <Corner color={this.state[2]} degree={.626} place={'left'} bottom={'167.6px'} left={'169px'} activateColor={() => this.handleBlueCorner.bind(this)} />
           <Corner color={this.state[3]} degree={.125} place={'right'} bottom={'20px'} left={'-56px'} activateColor={() => this.handleYellowCorner.bind(this)} />
         </div>
+        <Count strict={this.state.strict} count={this.state.count} handleClick={() => this.setGoal.bind(this)}/>
         <Controls start={this.state.startButton} strict={this.state.strictButton} startNewGame={() => this.startNewGame.bind(this)} toggleStrictMode={() => this.toggleStrictMode.bind(this)} />
       </div>
     );
@@ -254,11 +255,11 @@ class App extends Component {
       if (this.attempt.length < this.memory.length) {
         if (this.memory[this.attempt.length] === 0) {
           this.attempt.push(0);
-          if (this.attempt.length === this.memory.length && this.memory.length < 20) {
+          if (this.attempt.length === this.memory.length && this.memory.length < this.goal) {
             this.attempt = [];
             this.displaySuccessSignal();
             setTimeout(() => this.pickNewColor(Math.floor(Math.random() * 3)), 1000);
-          } else if (this.attempt.length === 20) {
+          } else if (this.attempt.length === this.goal) {
             this.displayWinSignal();
           }
         } else {
@@ -294,11 +295,11 @@ class App extends Component {
       if (this.attempt.length < this.memory.length) {
         if (this.memory[this.attempt.length] === 1) {
           this.attempt.push(1);
-          if (this.attempt.length === this.memory.length && this.memory.length < 20) {
+          if (this.attempt.length === this.memory.length && this.memory.length < this.goal) {
             this.attempt = [];
             this.displaySuccessSignal();
             setTimeout(() => this.pickNewColor(Math.floor(Math.random() * 3)), 1000);
-          } else if (this.attempt.length === 20) {
+          } else if (this.attempt.length === this.goal) {
             this.displayWinSignal();
           }
         } else {
@@ -334,11 +335,11 @@ class App extends Component {
       if (this.attempt.length < this.memory.length) {
         if (this.memory[this.attempt.length] === 2) {
           this.attempt.push(2);
-          if (this.attempt.length === this.memory.length && this.memory.length < 20) {
+          if (this.attempt.length === this.memory.length && this.memory.length < this.goal) {
             this.attempt = [];
             this.displaySuccessSignal();
             setTimeout(() => this.pickNewColor(Math.floor(Math.random() * 3)), 1000);
-          } else if (this.attempt.length === 20) {
+          } else if (this.attempt.length === this.goal) {
             this.displayWinSignal();
           }
         } else {
@@ -374,11 +375,11 @@ class App extends Component {
       if (this.attempt.length < this.memory.length) {
         if (this.memory[this.attempt.length] === 3) {
           this.attempt.push(3);
-          if (this.attempt.length === this.memory.length && this.memory.length < 20) {
+          if (this.attempt.length === this.memory.length && this.memory.length < this.goal) {
             this.attempt = [];
             this.displaySuccessSignal();
             setTimeout(() => this.pickNewColor(Math.floor(Math.random() * 3)), 1000);
-          } else if (this.attempt.length === 20) {
+          } else if (this.attempt.length === this.goal) {
             this.displayWinSignal();
           }
         } else {
@@ -414,13 +415,16 @@ class App extends Component {
   startNewGame() {
     if (this.state.count === '01') {
       this.setState({count: '00'});
+      this.memory = [];
+      this.attempt = [];
       clearTimeout(this.notify);
       return;
     }
+    this.notify && clearTimeout(this.notify);
     this.memory = [];
     this.attempt = [];
     this.setState({startButton: this.state.startButton + 1});
-    this.pickNewColor(Math.floor(Math.random() * 3));
+    this.pickNewColor(Math.floor(Math.random() * 4));
   }
 
   toggleStrictMode() {
@@ -542,6 +546,8 @@ class App extends Component {
      }, 6000);
     setTimeout(() => {
       this.celebrating = false;
+      this.attempt = [];
+      this.memory = [];
       this.setState({boxShadow: this.normalShadow, count: '00'});
       document.getElementsByClassName('main')[1].style.boxShadow = 'inset 0 0 100px black';
     }, 10000);
@@ -564,6 +570,17 @@ class App extends Component {
       setTimeout(() => {
         this.setState({border: this.normalBorder});
       }, 750);
+    }
+  }
+
+  setGoal() {
+    if (this.attempt.length || this.memory.length) return;
+    if (this.state.count === '00') {
+      this.goal = 1;
+      this.updateCount(this.goal);
+    } else {
+      this.goal++;
+      this.updateCount(this.goal);
     }
   }
 
